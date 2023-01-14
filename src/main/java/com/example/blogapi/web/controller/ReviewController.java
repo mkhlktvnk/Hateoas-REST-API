@@ -89,7 +89,7 @@ public class ReviewController {
                     responseCode = "200",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = PublisherModel.class)
+                            schema = @Schema(implementation = ReviewModel.class)
                     ),
                     description = "Review was found and returned"
             ),
@@ -108,7 +108,7 @@ public class ReviewController {
                     responseCode = "200",
                     content = @Content(
                             mediaType = MediaType.APPLICATION_JSON_VALUE,
-                            schema = @Schema(implementation = PublisherModel.class)
+                            schema = @Schema(implementation = ReviewModel.class)
                     ),
                     description = "Review was created"
             ),
