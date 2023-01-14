@@ -42,7 +42,7 @@ class ArticleMapperTest {
         assertEquals(mapped.getId(), article.getId());
         assertEquals(mapped.getDescription(), article.getDescription());
         assertEquals(mapped.getContent(), article.getContent());
-        assertEquals(mapped.getLinks().stream().count(), 3);
+        assertEquals(mapped.getLinks().stream().count(), 4);
     }
 
     @Test

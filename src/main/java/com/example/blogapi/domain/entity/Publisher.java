@@ -9,18 +9,18 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "publishers")
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
-public class User extends AbstractEntity implements Serializable {
+public class Publisher extends AbstractEntity implements Serializable {
     @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false, unique = true)
     private String email;
 
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "publisher_id")
     @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Review> reviews;
 }

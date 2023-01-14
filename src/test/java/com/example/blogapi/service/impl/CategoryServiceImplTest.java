@@ -83,4 +83,42 @@ class CategoryServiceImplTest {
 
         assertThrows(DuplicateEntityException.class, () -> categoryService.addCategory(category));
     }
+
+    @Test
+    void updateCategoryById_shouldCallRepositoryAndUpdateCategory_whenCategoryIsPresent() {
+        Category category = mock(Category.class);
+        Category categoryToUpdate = mock(Category.class);
+        when(categoryRepository.findById(ID)).thenReturn(Optional.of(categoryToUpdate));
+
+        categoryService.updateCategoryById(category, ID);
+
+        verify(categoryRepository).findById(ID);
+        verify(categoryToUpdate).setName(category.getName());
+        verify(categoryToUpdate).setDescription(category.getDescription());
+        verify(categoryRepository).save(category);
+    }
+
+    @Test
+    void updateCategoryById_shouldThrowEntityNotFoundException_whenCategoryIsNotPresent() {
+        when(categoryRepository.findById(ID)).thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> categoryService.updateCategoryById(any(Category.class), ID));
+    }
+
+    @Test
+    void deleteCategoryById_shouldCallRepository_whenCategoryIsPresent() {
+        when(categoryRepository.existsById(ID)).thenReturn(true);
+
+        categoryService.deleteCategoryById(ID);
+
+        verify(categoryRepository).existsById(ID);
+        verify(categoryRepository).deleteById(ID);
+    }
+
+    @Test
+    void deleteCategoryById_shouldThrowEntityNotFoundException_whenCategoryIsNotPresent() {
+        when(categoryRepository.existsById(ID)).thenReturn(false);
+
+        assertThrows(EntityNotFoundException.class, () -> categoryService.deleteCategoryById(ID));
+    }
 }

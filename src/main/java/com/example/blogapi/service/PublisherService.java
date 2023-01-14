@@ -4,9 +4,11 @@ import com.example.blogapi.domain.entity.Publisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-public interface UserService {
-    Page<Publisher> getUsersByPaging(Pageable pageable);
-    Publisher getUserById(Long id);
-    Publisher addUser(Publisher publisher);
+public interface PublisherService {
+    Page<Publisher> getAllPublishers(Pageable pageable);
+    Publisher getPublisherById(Long id);
+    Publisher addPublisher(Publisher publisher);
+    Publisher updatePublisher(Publisher publisher, Long id);
+    void deletePublisherById(Long id);
     boolean existsById(Long id);
 }

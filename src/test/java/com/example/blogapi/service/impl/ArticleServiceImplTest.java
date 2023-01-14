@@ -88,7 +88,7 @@ class ArticleServiceImplTest {
         when(userService.existsById(USER_ID)).thenReturn(true);
         when(articleRepository.findAllByPublisherId(pageable, USER_ID)).thenReturn(Page.empty());
 
-        articleService.getArticlesByUserId(pageable, USER_ID);
+        articleService.getArticlesByPublisherId(pageable, USER_ID);
 
         verify(userService).existsById(USER_ID);
         verify(articleRepository).findAllByPublisherId(pageable, USER_ID);
@@ -99,7 +99,7 @@ class ArticleServiceImplTest {
         Pageable pageable = mock(Pageable.class);
         when(userService.existsById(USER_ID)).thenReturn(false);
 
-        assertThrows(EntityNotFoundException.class, () -> articleService.getArticlesByUserId(pageable, USER_ID));
+        assertThrows(EntityNotFoundException.class, () -> articleService.getArticlesByPublisherId(pageable, USER_ID));
     }
 
     @Test
@@ -162,9 +162,8 @@ class ArticleServiceImplTest {
 
     @Test
     void updateArticleById_shouldThrowEntityNotFoundException_whenArticleIsNotPresent() {
-        Article newArticle = mock(Article.class);
         when(articleRepository.findById(ID)).thenReturn(Optional.empty());
 
-        assertThrows(EntityNotFoundException.class, () -> articleService.updateArticleById(ID, newArticle));
+        assertThrows(EntityNotFoundException.class, () -> articleService.updateArticleById(ID, any(Article.class)));
     }
 }

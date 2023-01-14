@@ -70,7 +70,7 @@ class PublisherServiceImplTest {
         when(publisherRepository.existsByEmail(publisher.getEmail())).thenReturn(false);
         when(publisherRepository.save(publisher)).thenReturn(publisher);
 
-        Publisher actual = publisherService.addUser(publisher);
+        Publisher actual = publisherService.addPublisher(publisher);
 
         assertNotNull(actual);
         assertEquals(actual, publisher);
@@ -85,7 +85,7 @@ class PublisherServiceImplTest {
         when(publisher.getEmail()).thenReturn(EMAIL);
         when(publisherRepository.existsByEmail(publisher.getEmail())).thenReturn(true);
 
-        assertThrows(DuplicateEntityException.class, () -> publisherService.addUser(publisher));
+        assertThrows(DuplicateEntityException.class, () -> publisherService.addPublisher(publisher));
     }
 
     @Test
@@ -96,7 +96,7 @@ class PublisherServiceImplTest {
         when(publisherRepository.existsByEmail(publisher.getEmail())).thenReturn(false);
         when(publisherRepository.existsByUsername(publisher.getUsername())).thenReturn(true);
 
-        assertThrows(DuplicateEntityException.class, () -> publisherService.addUser(publisher));
+        assertThrows(DuplicateEntityException.class, () -> publisherService.addPublisher(publisher));
     }
 
     @Test
@@ -111,6 +111,13 @@ class PublisherServiceImplTest {
         verify(publisher).setEmail(newPublisher.getEmail());
         verify(publisher).setUsername(newPublisher.getUsername());
         verify(publisherRepository).save(publisher);
+    }
+
+    @Test
+    void updatePublisher_shouldThrowEntityNotFoundException_whenPublisherIsNotPresent() {
+        when(publisherRepository.findById(ID)).thenReturn(Optional.empty());
+
+        assertThrows(EntityNotFoundException.class, () -> publisherService.updatePublisher(any(Publisher.class), ID));
     }
 
     @Test
